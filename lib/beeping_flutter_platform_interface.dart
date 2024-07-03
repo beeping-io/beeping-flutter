@@ -24,6 +24,10 @@ abstract class BeepingFlutterPlatform extends PlatformInterface {
   }
 
   Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+    return BeepingFlutterPlatform.instance.getPlatformVersion();
+  }
+
+  Future<num?> getBatteryLevel() {
+    return BeepingFlutterPlatform.instance.getBatteryLevel();
   }
 }

@@ -11,7 +11,13 @@ class MethodChannelBeepingFlutter extends BeepingFlutterPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
+  }
+
+  @override
+  Future<num?> getBatteryLevel() {
+    return methodChannel.invokeMethod<num?>('getBatteryLevel');
   }
 }

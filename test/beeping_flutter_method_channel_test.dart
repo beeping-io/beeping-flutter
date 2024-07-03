@@ -9,19 +9,33 @@ void main() {
   const MethodChannel channel = MethodChannel('beeping_flutter');
 
   setUp(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
       channel,
       (MethodCall methodCall) async {
-        return '42';
+        if (methodCall.method == 'getPlatformVersion') {
+          return '0.0.0+1';
+        }
+
+        if (methodCall.method == 'getBatteryLevel') {
+          return 21;
+        }
+
+        return null;
       },
     );
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
   });
 
   test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+    expect(await platform.getPlatformVersion(), '0.0.0+1');
+  });
+
+  test('getBatteryLevel', () async {
+    expect(await platform.getBatteryLevel(), 21);
   });
 }
